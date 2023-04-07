@@ -7,7 +7,9 @@
   <p>
     You are logged in as <%= current_user.role %>
   </p>
-  <%= link_to 'Logout', destroy_user_session_path, method: :delete %>
+  <%= link_to 'Logout', destroy_user_session_path, 'data-turbo-method': :delete %>
+  <%= button_to  'Logout', destroy_user_session_path, method: :delete%>
+
 <% else %>
   <p>
     You are not logged in.
