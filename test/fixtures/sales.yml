@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  book: one
+  book_type: Book
+  price: 9.99
+  author_paid: false
+  dated_paid: 2023-04-07 21:52:57
+  copies_sold: 1
+  sale_date: 2023-04-07 21:52:57
+  user: one
+
+two:
+  book: two
+  book_type: Book
+  price: 9.99
+  author_paid: false
+  dated_paid: 2023-04-07 21:52:57
+  copies_sold: 1
+  sale_date: 2023-04-07 21:52:57
+  user: two

@@ -21,6 +21,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_07_223909) do
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
     t.integer "role", default: 0
+    t.integer "membership", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
