@@ -17,10 +17,10 @@ class User < ApplicationRecord
   def payment
     return unless author?
 
-    sales_to_pay = Sales.where(authorpayed: false)
-                        .where('saledate <= ?', 7.days.ago.to_date)
-                        .where(book: { user_id: id, role: 'author' })
-                        .joins(:book)
+    sales_to_pay = Sale.where(authordpayed: false)
+                       .where('saledate <= ?', 7.days.ago)
+                       .joins(book: :user)
+                       .where('users.role = ?', 2)
 
     sales_to_pay.each do |sale|
       cut = case sale.book.user.membership

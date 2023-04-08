@@ -10,9 +10,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_07_223909) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_08_015230) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "books", force: :cascade do |t|
+    t.string "title", null: false
+    t.text "description", null: false
+    t.decimal "price", precision: 10, scale: 2, null: false
+    t.integer "amountsold", default: 0, null: false
+    t.boolean "available", default: true, null: false
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_books_on_user_id"
+  end
+
+  create_table "sales", force: :cascade do |t|
+    t.bigint "book_id", null: false
+    t.decimal "price", precision: 10, scale: 2, null: false
+    t.boolean "authorpayed", default: false, null: false
+    t.datetime "datedpayed"
+    t.integer "amountsold", default: 0, null: false
+    t.datetime "saledate"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id"], name: "index_sales_on_book_id"
+    t.index ["user_id"], name: "index_sales_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -22,10 +48,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_07_223909) do
     t.datetime "remember_created_at"
     t.integer "role", default: 0
     t.integer "membership", default: 0, null: false
+    t.string "name", null: false
+    t.string "last_name", null: false
+    t.decimal "balance", precision: 10, scale: 2, default: "0.0", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "books", "users"
+  add_foreign_key "sales", "books"
+  add_foreign_key "sales", "users", on_delete: :restrict
 end
