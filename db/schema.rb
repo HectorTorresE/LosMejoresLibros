@@ -31,8 +31,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_08_015230) do
     t.decimal "price", precision: 10, scale: 2, null: false
     t.boolean "authorpayed", default: false, null: false
     t.datetime "datedpayed"
-    t.integer "amountsold", default: 0, null: false
-    t.datetime "saledate"
+    t.integer "copies", default: 0, null: false
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

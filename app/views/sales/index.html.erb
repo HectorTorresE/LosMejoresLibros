@@ -1,0 +1,68 @@
+<h1>Sales</h1>
+<br/>
+<div class="notice"><%= notice %></div>
+<div class="alert"><%= alert %></div>
+<br/>
+<table>
+  <thead>
+    <tr>
+      <th>Book Title</th>
+      <th>Price</th>
+      <th>Copies</th>
+      <th>User</th>
+      <th>Author Paid</th>
+      <th>Date Paid</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @sales.each do |sale| %>
+      <tr>
+        <td><%= sale.book.title %></td>
+        <td><%= number_to_currency(sale.price) %></td>
+        <td><%= sale.copies %></td>
+        <td><%= sale.user.email %></td>
+        <td><%= sale.authorpayed ? "Yes" : "No" %></td>
+        <td><%= sale.datedpayed %></td>
+        <td>
+          <% unless sale.authorpayed %>
+            <%= button_to "Pay Author", pay_author_sale_path(sale), method: :patch %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br/>
+<h1>Users</h1>
+<br/>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>role</th>
+      <th>Balance</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.name %></td>
+        <td><%= user.email %></td>
+        <td><%= user.role %></td>
+        <td><%= number_to_currency(user.balance) %></td>
+        <% if user.author? %>
+          <td>
+            <%= form_tag set_autopay_sale_path(user), method: :post, class: "autopay-form" do %>
+              <%= label_tag :days, "Days" %>
+              <%= number_field_tag :days, 7, min: 1, class: "form-control" %>
+              <%= submit_tag "Set Auto Pay", class: "btn btn-primary" %>
+            <% end %>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
