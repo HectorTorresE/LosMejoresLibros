@@ -12,6 +12,7 @@
 - PostgreSQL
 
 ## ERD
+![image](https://user-images.githubusercontent.com/31547587/230801449-fa771674-cd01-4b60-8946-13b15f59baf9.png)
 
 
 ### Prerrequisitos
