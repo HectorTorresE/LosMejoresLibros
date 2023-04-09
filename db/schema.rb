@@ -33,6 +33,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_08_015230) do
     t.datetime "datedpayed"
     t.integer "copies", default: 0, null: false
     t.bigint "user_id", null: false
+    t.boolean "refund", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["book_id"], name: "index_sales_on_book_id"
@@ -50,6 +51,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_08_015230) do
     t.string "name", null: false
     t.string "last_name", null: false
     t.decimal "balance", precision: 10, scale: 2, default: "0.0", null: false
+    t.integer "autopay_days", default: 14, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true

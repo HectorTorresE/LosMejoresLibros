@@ -7,6 +7,7 @@ class CreateSales < ActiveRecord::Migration[7.0]
       t.datetime :datedpayed
       t.integer :copies, null: false, default: 0
       t.references :user, null: false, foreign_key: { on_delete: :restrict }
+      t.boolean :refund, null: false, default: false
 
       t.timestamps null: false
     end

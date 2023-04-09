@@ -6,9 +6,9 @@ class BooksController < ApplicationController
   def new
     @book = Book.new
     @my_books = Book.where(user_id: current_user.id).order('created_at DESC')
-    sales = Sale.includes(:book).where(books: { user_id: current_user.id })
-    @books_sold = sales.sum(:copies)
-    @pending = sales.where(authorpayed: false).sum(:copies)
+    @sales = Sale.includes(:book).where(books: { user_id: current_user.id }, refund: false)
+    @books_sold = @sales.where(refund: false).sum(:copies)
+    @pending = @sales.where(authorpayed: false).sum(:copies)
   end
 
   def create
@@ -41,6 +41,19 @@ class BooksController < ApplicationController
       render :edit
     end
   end
+
+  def refund
+    sale = Sale.find(params[:id])
+    author = sale.book.user
+    client = sale.user
+
+    author.update(balance: author.balance - (sale.price * author.author_cut)) if sale.authorpayed?
+    client.update(balance: client.balance + sale.price)
+    sale.update(refund: true)
+
+    redirect_to new_book_path, notice: 'Book refund successfully'
+  end
+
   private
 
   def book_params

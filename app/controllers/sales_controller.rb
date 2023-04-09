@@ -1,12 +1,12 @@
 class SalesController < ApplicationController
   def new
     @books = Book.where(available: true).order('created_at DESC')
-    @my_books = Sale.where(user_id: current_user.id).order('created_at DESC').sum(:copies)
+    @my_books = Sale.where(user_id: current_user.id, refund: false).order('created_at DESC').sum(:copies)
     @sale = Sale.new
   end
 
   def index
-    @sales = Sale.includes(:book, :user).all.order('created_at DESC')
+    @sales = Sale.includes(:book, :user).where(refund: false).order('created_at DESC')
     @users = User.where(role: %w[client author]).order('created_at DESC')
   end
 
@@ -41,14 +41,17 @@ class SalesController < ApplicationController
 
   def set_autopay
     @author = User.find(params[:id])
-    @user.update(autopay_days: params[:days])
-    redirect_to users_path, notice: 'Autopay set successfully'
+    @author.update(autopay_days: params[:days])
+
+    # Schedule the job to run every X days
+    AutopayAuthorJob.perform_at(10.seconds.from_now, @author.id)
+
+    redirect_to sales_path, notice: 'Autopay set successfully'
   end
 
-  def autopay
-    user = User.find(params[:id])
-    sales_to_pay = Sale.joins(book: :user).where(authorpayed: false, books: { user_id: user.id },
-                                                 sales: { created_at: 7.days.ago..Time.current })
+  def autopay(user_id)
+    user = User.find(user_id)
+    sales_to_pay = Sale.joins(book: :user).where(authorpayed: false, books: { user_id: user.id }).where('sales.created_at < ?', 7.days.ago)
 
     sales_to_pay.each do |sale|
       amount_to_pay = sale.price * user.author_cut

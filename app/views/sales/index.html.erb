@@ -66,3 +66,8 @@
     <% end %>
   </tbody>
 </table>
+<%if current_user.admin?%>
+  <%= button_to 'Monitor Jobs', sidekiq_web_path, method: :get%>
+<%end%>
+<br/>
+<%= button_to  'Logout', destroy_user_session_path, method: :delete%>

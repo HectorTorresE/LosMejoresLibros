@@ -52,6 +52,33 @@
   </tbody>
 </table>
 
+<h1>My Sales</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Book Title</th>
+      <th>Price</th>
+      <th>Copies</th>
+      <th>User</th>
+      <th>Paid</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @sales.each do |sale| %>
+      <tr>
+        <td><%= sale.book.title %></td>
+        <td><%= number_to_currency(sale.price) %></td>
+        <td><%= sale.copies %></td>
+        <td><%= sale.user.email %></td>
+        <td><%= sale.authorpayed ? "Yes" : "No" %></td>
+        <td><%= button_to "Refund", refund_book_path(sale), method: :patch %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
 
 <p>
   <strong>Balance:</strong>
