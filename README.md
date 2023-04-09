@@ -1,24 +1,59 @@
-# README
+# Los Mejores Libros
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+> Esta app permite crear 3 tipos de usarios: admin, editor y usuario. Los usuarios pueden comprar libros. Los editores pueden crear libros y editarlos y rembolsar compras. Los administradores pueden ven las venta realizar el pago de regalias a los editores de forma manuel y tambien pien agender el paga de forma automatica.
 
-Things you may want to cover:
+## Built With
 
-* Ruby version
+- Ruby
+- Ruby on Rails
+- Gems
+- Bundler
+- RSpec
+- PostgreSQL
 
-* System dependencies
+## ERD
 
-* Configuration
 
-* Database creation
+### Prerrequisitos
+- Ruby
+- PostgreSQL
+- redis-server
+- Sidekiq
 
-* Database initialization
+### Setup
+- Clone this repository in your local machine by using `git clone https://github.com/HectorTorresE/LosMejoresLibros.git`
+- Update `config/database.yml` file in order to set a working user/password postgresql account
+### Install
+Install the dependencies with `bundle install`
+### Database
+- Crear base de datos con `rails db:create`
+- Correr las migraciones con `rails db:migrate`
+### Usage
+- Iniciar el redis-server con `redis-server`
+- Iniciar sidekiq con `bundle exec sidekiq`
+- Correr la app con `rails server`
+- Navegar a [http://localhost:3000](http://localhost:3000)
 
-* How to run the test suite
+## Programador
 
-* Services (job queues, cache servers, search engines, etc.)
+👤 **Hector Torres**
 
-* Deployment instructions
+- GitHub: [@HectorTorres](https://github.com/HectorTorresE)
+- Portfolio: [Hectorjte.com](www.hectorjte.com)
+- LinkedIn: [@Hectorjte](https://www.linkedin.com/in/hectorjte/)
 
-* ...
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome!
+
+Feel free to check the [issues page](../../issues/).
+
+## Show your support
+
+Give a ⭐️ if you like this project!
+
+## Acknowledgments
+
+- Hat tip to anyone whose code was used
+- Inspiration
+- etc
