@@ -40,7 +40,7 @@ Install the dependencies with `bundle install`
 👤 **Hector Torres**
 
 - GitHub: [@HectorTorres](https://github.com/HectorTorresE)
-- Portfolio: [Hectorjte.com](www.hectorjte.com)
+- Portfolio: [Hectorjte.com](https://www.hectorjte.com/)
 - LinkedIn: [@Hectorjte](https://www.linkedin.com/in/hectorjte/)
 
 ## 🤝 Contributing
