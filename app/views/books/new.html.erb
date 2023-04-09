@@ -1,0 +1,93 @@
+<h1>Add a new book</h1>
+
+<div class="notice"><%= notice %></div>
+<% if @book.errors.any? %>
+  <div>
+    <h2><%= pluralize(@book.errors.count, "error") %> prohibited this book from being saved:</h2>
+
+    <ul>
+      <% @book.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_for @book do |f| %>
+  <%= f.label :title %>
+  <%= f.text_field :title %>
+
+  <%= f.label :description %>
+  <%= f.text_area :description %>
+
+  <%= f.label :price %>
+  <%= f.number_field :price, step: 0.01 %>
+
+  <%= f.submit "Add Book" %>
+<% end %>
+
+<br/>
+
+<h1>My Books</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Price</th>
+      <th>Copies sold</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @my_books.each do |book| %>
+      <tr>
+        <td><%= book.title %></td>
+        <td><%= book.description %></td>
+        <td><%= book.price %></td>
+        <td><%= book.amountsold %></td>
+        <td><%= link_to "Edit", edit_book_path(book) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h1>My Sales</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Book Title</th>
+      <th>Price</th>
+      <th>Copies</th>
+      <th>User</th>
+      <th>Paid</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @sales.each do |sale| %>
+      <tr>
+        <td><%= sale.book.title %></td>
+        <td><%= number_to_currency(sale.price) %></td>
+        <td><%= sale.copies %></td>
+        <td><%= sale.user.email %></td>
+        <td><%= sale.authorpayed ? "Yes" : "No" %></td>
+        <td><%= button_to "Refund", refund_book_path(sale), method: :patch %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+<p>
+  <strong>Balance:</strong>
+  <%= "$#{current_user.balance}" %>
+  <br/>
+  <strong>Books Sold:</strong>
+  <%= @books_sold%>
+  <br/>
+  <strong>Books pending payment:</strong>
+  <%= @pending%>
+  <%= button_to  'Logout', destroy_user_session_path, method: :delete%>
+</p>

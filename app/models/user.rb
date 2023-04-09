@@ -14,6 +14,14 @@ class User < ApplicationRecord
     self.role ||= :client
   end
 
+  def author_cut
+    case self.membership
+    when 'free' then 0.05
+    when 'basic' then 0.15
+    when 'premium' then 0.25
+    end
+  end
+
   def payment
     return unless author?
 

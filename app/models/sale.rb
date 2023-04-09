@@ -1,15 +1,18 @@
 class Sale < ApplicationRecord
-  belongs_to :book, polymorphic: true
-  belongs_to :author, class_name: 'User', foreign_key: 'user_id'
+  belongs_to :book
+  belongs_to :user
 
   validates :price, presence: true, numericality: { greater_than: 0 }
-  validates :copies_sold, presence: true, numericality: { greater_than: 0 }
-  validates :sale_date, presence: true
-  validates :book, presence: true
+  validates :copies, presence: true, numericality: { greater_than: 0 }
 
-  before_save :set_author_paid_date, if: :author_paid_changed?
-  
-  def set_author_paid_date
-    self.dated_paid = Time.now if author_paid?
+  def autopay(user_id)
+    user = User.find(user_id)
+    sales_to_pay = Sale.joins(book: :user).where(authorpayed: false, books: { user_id: user.id }).where('sales.created_at < ?', 7.days.ago)
+
+    sales_to_pay.each do |sale|
+      amount_to_pay = sale.price * user.author_cut
+      user.update(balance: user.balance + amount_to_pay)
+      sale.update(authorpayed: true, datedpayed: Time.now)
+    end
   end
 end
