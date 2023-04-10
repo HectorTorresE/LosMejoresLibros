@@ -11,6 +11,13 @@
 - RSpec
 - PostgreSQL
 
+## Video Demo
+
+
+https://user-images.githubusercontent.com/31547587/230803360-93b4eba1-7172-4658-9285-630bc8ada040.mp4
+
+
+
 ## ERD
 ![image](https://user-images.githubusercontent.com/31547587/230801449-fa771674-cd01-4b60-8946-13b15f59baf9.png)
 
